@@ -1,6 +1,7 @@
 # imagex
 imagex 是一个通过 http 服务提供的图片处理web 程序 底成基于 python pillow simd
-
+功能有: 格式转换、图像裁剪、内切圆裁剪、图像缩放、图像旋转、质量转换
+、体积限制、获取图片信息 、图像置灰、清理设置  
 ### 指令化裁剪接口
 接口:   /v1/image/process
 
