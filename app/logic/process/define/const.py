@@ -1,0 +1,201 @@
+
+"""
+定义指令
+"""
+
+# 入信息
+INSTRUCTION_ININFO: str = "ininfo"
+
+# 格式化
+INSTRUCTION_FORMAT: str = "format"
+
+# 裁剪
+INSTRUCTION_CROP: str = "crop"
+
+# 内切圆裁剪
+INSTRUCTION_CIRCLE: str = "circle"
+
+# 内切圆椭圆裁剪
+INSTRUCTION_ELLIPSE: str = "ellipse"
+
+# 圆角矩形
+INSTRUCTION_ROUNDED_CORNERS: str = "rounded-corners"
+
+# 图像缩放
+INSTRUCTION_RESIZE: str = "resize"
+
+# 图像旋转
+INSTRUCTION_ROTATE: str = "rotate"
+
+# 自适应旋转
+INSTRUCTION_AUTO_ORIENT: str = "auto-orient"
+
+# 质量转换
+INSTRUCTION_QUALITY: str = "quality"
+
+# 体积限制
+INSTRUCTION_LIMIT: str = "limit"
+
+# 置灰
+INSTRUCTION_GRAY: str = "gray"
+
+# 信息
+INSTRUCTION_INFO: str = "info"
+
+# 清除信息
+INSTRUCTION_STRIP: str = "strip"
+
+"""
+指令定界
+"""
+# 指令定界符
+INSTRUCTION_DELIMITER: str = "/"
+
+# 指令参数定界符
+INSTRUCTION_ARG_DELIMITER: str = ","
+
+# 指令 k , v 分割
+INSTRUCTION_ARG_SPLIT: str = "_"
+
+
+"""
+图片格式
+"""
+# JPG 格式
+IMAGE_FORMAT_JPG: str = "JPG"
+# JPEG 格式
+IMAGE_FORMAT_JPEG: str = "JPEG"
+# GIF 格式
+IMAGE_FORMAT_GIF: str = "GIF"
+# PNG 格式
+IMAGE_FORMAT_PNG: str = "PNG"
+# WEBP 格式
+IMAGE_FORMAT_WEBP: str = "WEBP"
+# HEIC 格式
+IMAGE_FORMAT_HEIC: str = "HEIC"
+IMAGE_FORMAT_HEIF: str = "HEIF"
+# AVIF 格式
+IMAGE_FORMAT_AVIF: str = "AVIF"
+# BMP 格式
+IMAGE_FORMAT_BMP: str = "BMP"
+# BMP2 格式
+IMAGE_FORMAT_BMP2: str = "BMP2"
+# BMP3 格式
+IMAGE_FORMAT_BMP3: str = "BMP3"
+# MPO 格式图片 仅支持读取
+IMAGE_FORMAT_MPO: str = "MPO"
+
+
+"""
+图片格式输出 http content type
+"""
+IMAGE_FORMAT_CONTENT_TYPES = {
+    IMAGE_FORMAT_JPG: "image/jpeg",
+    IMAGE_FORMAT_JPEG: "image/jpeg",
+    IMAGE_FORMAT_GIF: "image/gif",
+    IMAGE_FORMAT_PNG: "image/png",
+    IMAGE_FORMAT_WEBP: "image/webp",
+    IMAGE_FORMAT_HEIF: "image/heif",
+    IMAGE_FORMAT_HEIC: "image/heic",
+    IMAGE_FORMAT_AVIF: "image/avif",
+    IMAGE_FORMAT_BMP: "image/bmp",
+    IMAGE_FORMAT_BMP2: "image/bmp",
+    IMAGE_FORMAT_BMP3: "image/bmp"
+}
+
+
+"""
+图片格式组装
+"""
+IMAGE_FORMATS = (IMAGE_FORMAT_JPG, IMAGE_FORMAT_JPEG, IMAGE_FORMAT_GIF, IMAGE_FORMAT_PNG, IMAGE_FORMAT_WEBP,
+                 IMAGE_FORMAT_HEIC, IMAGE_FORMAT_HEIF, IMAGE_FORMAT_AVIF, IMAGE_FORMAT_BMP, IMAGE_FORMAT_BMP2,
+                 IMAGE_FORMAT_BMP3, IMAGE_FORMAT_MPO)
+
+"""
+图片输出支持格式
+"""
+IMAGE_OUTPUT_FORMATS = (IMAGE_FORMAT_JPG, IMAGE_FORMAT_JPEG, IMAGE_FORMAT_GIF, IMAGE_FORMAT_PNG, IMAGE_FORMAT_WEBP,
+                        IMAGE_FORMAT_AVIF, IMAGE_FORMAT_BMP, IMAGE_FORMAT_BMP2, IMAGE_FORMAT_BMP3)
+
+
+"""
+无损图片格式
+"""
+IMAGE_LOSSLESS_FORMATS = (IMAGE_FORMAT_PNG, IMAGE_FORMAT_GIF, IMAGE_FORMAT_BMP, IMAGE_FORMAT_BMP2, IMAGE_FORMAT_BMP3)
+
+"""
+透明度支持
+"""
+IMAGE_TRANSPARENCY_SUPPORT_FORMATS = (IMAGE_FORMAT_GIF, IMAGE_FORMAT_PNG, IMAGE_FORMAT_WEBP, IMAGE_FORMAT_HEIF,
+                                      IMAGE_FORMAT_HEIC, IMAGE_FORMAT_AVIF)
+
+"""
+动画支持
+"""
+IMAGE_ANIMATED_SUPPORT_FORMATS = (IMAGE_FORMAT_GIF, IMAGE_FORMAT_WEBP, IMAGE_FORMAT_HEIC, IMAGE_FORMAT_HEIF,
+                                  IMAGE_FORMAT_AVIF)
+
+
+"""
+图片动画表示
+"""
+IMAGE_ANIMATED: int = 1
+
+"""
+自适应旋转
+"""
+IMAGE_ORIENT_AUTO: int = 1
+
+"""
+不自动旋转
+"""
+IMAGE_ORIENT_NO: int = 0
+
+"""
+裁剪类型 自动 左右上中下
+"""
+IMAGE_CROP_MODE_AUTO = "auto"
+IMAGE_CROP_MODE_LEFT = "left"
+IMAGE_CROP_MODE_RIGHT = "right"
+IMAGE_CROP_MODE_TOP = "top"
+IMAGE_CROP_MODE_CENTER = "center"
+IMAGE_CROP_MODE_BOTTOM = "bottom"
+
+"""
+图片裁剪类型 tuple
+"""
+IMAGE_CROP_MODES = (IMAGE_CROP_MODE_AUTO, IMAGE_CROP_MODE_LEFT, IMAGE_CROP_MODE_RIGHT, IMAGE_CROP_MODE_TOP,
+                    IMAGE_CROP_MODE_CENTER, IMAGE_CROP_MODE_BOTTOM)
+
+"""
+图片动图 裁剪首帧标志
+"""
+IMAGE_CROP_FIRST_FRAME: int = 1
+
+"""
+图片大小不限制标志
+"""
+IMAGE_LENGTH_UNLIMITED: int = -1
+
+
+"""
+图缩放参数
+"""
+# 强制缩放
+IMAGE_RESIZE_MODE_FIXED: int = "fixed"
+# 等比缩放 内最大
+IMAGE_RESIZE_MODE_LFIT: int = "lfit"
+# 等比缩放 外最大
+IMAGE_RESIZE_MODE_MFIT: int = "mfit"
+
+IMAGE_RESIZE_MODES = (IMAGE_RESIZE_MODE_FIXED, IMAGE_RESIZE_MODE_LFIT, IMAGE_RESIZE_MODE_MFIT)
+
+"""
+颜色定义
+"""
+# 白色颜色
+IMAGE_WHITE_COLOR = (255, 255, 255)
+
+# 透明白色
+IMAGE_TRANSPARENCY_WHITE_COLOR = (255, 255, 255, 0)
+
