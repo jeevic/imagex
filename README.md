@@ -55,3 +55,19 @@ curl -F "file=@input.jpg" \
   http://127.0.0.1:8090/v1/image/process -o out.webp
 # 裁剪 → 缩放 → 转 webp → 质量 → 内切圆, 按顺序执行
 ```
+
+## Action 速查表
+
+| action | 用途 | 必填参数 | 备注 |
+|--|--|--|--|
+| format | 格式转换 | f | 强转动图部分指令不可用 |
+| crop | 矩形裁剪 | m, w, h | 动图默认取中间帧,first=1 取首帧 |
+| circle | 内切圆裁剪 | — | png/webp 透明,jpg 白底 |
+| ellipse | 椭圆裁剪 | — | 以原图宽高为基础 |
+| rounded-corners | 圆角矩形 | — | 半径超范围取短边一半 |
+| resize | 缩放 | m, w, h | m: fixed/lfit/mfit;动图取首帧 |
+| rotate | 旋转 | a | 动图不可旋转 |
+| auto-orient | 自适应旋转 | o | 0 不转,1 自适应 |
+| quality | 质量转换 / 体积限制 | q 或 l/decr/min | 仅对有损格式生效;动图忽略 |
+| gray | 置灰 | — | 动图不可置灰 |
+| strip | 清理配置(exif 等) | — | |
