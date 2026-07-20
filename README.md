@@ -174,3 +174,47 @@ curl -F "file=@input.jpg" -F "x-image-process=rotate,a_90" http://127.0.0.1:8090
 ```bash
 curl -F "file=@input.jpg" -F "x-image-process=auto-orient,o_1" http://127.0.0.1:8090/v1/image/process -o out.jpg
 ```
+
+### 质量转换 quality
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| q | int | 是 | 相对质量,输出质量 = 原图质量 × q% |
+
+质量只对有损压缩格式生效(JPEG、WebP、Heic 等);无损格式(PNG、TIFF、BMP、GIF 等)无效。动图无法限制体积,会忽略指令。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=quality,q_80" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
+
+### 体积限制 quality
+
+体积限制只对有损压缩格式生效(JPEG、WebP、Heic 等)。
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| l | int | 是 | 限制体积,-1 为不限制,基于质量限制大小 |
+| decr | int | 是 | 每次递减质量,加快处理 |
+| min | int | 是 | 最小质量 |
+
+动图无法限制体积。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=quality,l_100000,decr_5,min_20" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
+
+### 图像置灰 gray
+
+动图不可置灰。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=gray" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
+
+### 清理设置 strip
+
+去掉图片的所有配置和设置,如 exif。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=strip" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
