@@ -299,3 +299,43 @@ exif 可能字段(不限于以下):DateTime、DateTimeOriginal、DateTimeDigitiz
 ```bash
 curl -F "file=@input.jpg" http://127.0.0.1:8090/v1/image/info
 ```
+
+## 响应与错误
+
+成功(process 端点):
+
+- HTTP 200
+- Body:处理后的图片二进制
+- Content-Type:对应输出格式(PNG / JPEG / WEBP 等)
+
+成功(info 端点):
+
+- HTTP 200
+- Body:上述 JSON
+
+失败:
+
+- HTTP 非 200
+- Body:HTML,`<title>` 为错误信息
+
+错误 HTML 模板:
+
+```html
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>{{ .title }}</title></head>
+<body></body>
+</html>
+```
+
+失败示例:
+
+```bash
+# 缺少 x-image-process
+curl -F "file=@input.jpg" http://127.0.0.1:8090/v1/image/process
+# HTTP 400, <title>[process] no image  process str</title>
+
+# 未上传文件
+curl -F "x-image-process=resize,m_lfit,w_200,h_100" http://127.0.0.1:8090/v1/image/process
+# HTTP 400, <title>[process] upload no image file</title>
+```
