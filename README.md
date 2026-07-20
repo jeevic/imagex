@@ -71,3 +71,70 @@ curl -F "file=@input.jpg" \
 | quality | 质量转换 / 体积限制 | q 或 l/decr/min | 仅对有损格式生效;动图忽略 |
 | gray | 置灰 | — | 动图不可置灰 |
 | strip | 清理配置(exif 等) | — | |
+
+## Action 详解
+
+x-image-process 可放 URL 跟参或 form 提交,以下示例统一用 form 字段提交。
+
+### 格式转换 format
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| f | string | 是 | 图片转换格式 PNG,JPG,JPEG,WEBP,GIF 等 |
+
+动图强转静图后部分指令无法操作(如 rotate)。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=format,f_PNG" http://127.0.0.1:8090/v1/image/process -o out.png
+```
+
+### 图像裁剪 crop
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| ow | int | 否 | 原图宽 |
+| oh | int | 否 | 原图高 |
+| m | string | 是 | 裁剪模式 枚举值 auto, center, top, bottom, left, right |
+| w | int | 是 | 裁剪宽度,默认原图宽 |
+| h | int | 是 | 裁剪高度,默认原图高 |
+| x | int | 否 | 裁剪起始 x 坐标 |
+| y | int | 否 | 裁剪起始 y 坐标 |
+| first | int | 否 | 是否裁剪首帧 0/1,1 取首帧,默认 0 取中间帧,针对动图 |
+
+动图裁剪默认取中间帧变静图,first=1 取首帧。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=crop,m_auto,w_200,h_100" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
+
+### 内切圆裁剪 circle
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| r | int | 否 | 内切圆半径,超过最小边一半则以最大内切圆 |
+
+裁剪以图片中心为圆心,取出半径为 r 的圆形区域。png、webp 默认背景透明,jpg 默认白底。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=circle,r_100" http://127.0.0.1:8090/v1/image/process -o out.png
+```
+
+### 椭圆裁剪 ellipse
+
+椭圆裁剪以原图宽高长度为基础进行椭圆裁图,无参数。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=ellipse" http://127.0.0.1:8090/v1/image/process -o out.png
+```
+
+### 圆角矩形 rounded-corners
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| r | int | 否 | 圆角半径,范围 [1, min(width/2, height/2)],超范围取短边一半 |
+
+png、webp 默认背景透明,jpg 默认白底。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=rounded-corners,r_20" http://127.0.0.1:8090/v1/image/process -o out.png
+```
