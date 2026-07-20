@@ -218,3 +218,84 @@ curl -F "file=@input.jpg" -F "x-image-process=gray" http://127.0.0.1:8090/v1/ima
 ```bash
 curl -F "file=@input.jpg" -F "x-image-process=strip" http://127.0.0.1:8090/v1/image/process -o out.jpg
 ```
+
+## 获取图片信息 /v1/image/info
+
+请求方式:POST
+Content-Type:multipart/form-data
+
+| 参数 | 类型 | 备注 |
+|--|--|--|
+| file | binary raw | 处理的图片流,form-data 形式提交 |
+
+接口以 JSON 形式返回图片信息。若图片含 exif,返回包含 exif 的完整信息;否则返回基本信息。基本信息:width(宽)、height(高)、length(大小,单位字节)、format(格式:PNG/JPG/GIF/WEBP 等)。
+
+字段说明:
+
+| 字段 | 说明 |
+|--|--|
+| code | 0 成功,-1 错误 |
+| msg | success 或错误信息 |
+| data.width / height | 宽 / 高,单位 px |
+| data.length | 图片大小,单位字节 |
+| data.format | 格式:PNG / JPG / GIF / WEBP 等 |
+| data.animated | 是否动图:0 否,1 是 |
+| data.number_images | 帧数 |
+| data.exif | 若图片含 exif 则返回完整 exif;无则此字段缺省 |
+| request_id | 请求追踪 id |
+
+exif 可能字段(不限于以下):DateTime、DateTimeOriginal、DateTimeDigitized、format、gpsLatitude、gpsLatitudeRef、gpsLongitude、gpsLongitudeRef、imageHeight、imageWidth、imageSize、make、model、orientation、resolutionX、resolutionY、resolutionUnit。
+
+完整 exif 示例:
+
+```json
+{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "width": 1936,
+        "height": 4000,
+        "format": "JPEG",
+        "length": 2652164,
+        "animated": 0,
+        "number_images": 1,
+        "exif": {
+            "DateTime": "2021:08:07 17:48:33",
+            "DateTimeDigitized": "2021:08:07 17:48:33",
+            "DateTimeOriginal": "2021:08:07 17:48:33",
+            "ExifOffset": "137",
+            "ExposureBiasValue": "0/100",
+            "ExposureMode": "0",
+            "ExposureTime": "8333333/1000000000",
+            "FNumber": "260/100",
+            "Flash": "0",
+            "FocalLength": "530/100",
+            "FocalLengthIn35mmFilm": "28",
+            "GPSDateStamp": "2021:08:07",
+            "GPSInfo": "371",
+            "GPSLatitude": "39/1, 57/1, 393/100",
+            "GPSLatitudeRef": "N",
+            "GPSLongitude": "116/1, 33/1, 5807/100",
+            "GPSLongitudeRef": "E",
+            "GPSTimeStamp": "9/1, 48/1, 33/1",
+            "Make": "meizu",
+            "MeteringMode": "2",
+            "Model": "16s",
+            "Orientation": "1",
+            "PhotographicSensitivity": "111",
+            "Software": "Meizu Camera",
+            "UserComment": "101, 110, 100",
+            "WhiteBalance": "0",
+            "thumbnail:JPEGInterchangeFormat": "562",
+            "thumbnail:JPEGInterchangeFormatLength": "8678"
+        }
+    },
+    "request_id": "f59f5733-d794-4509-b6ba-deeb8b171bd9"
+}
+```
+
+示例:
+
+```bash
+curl -F "file=@input.jpg" http://127.0.0.1:8090/v1/image/info
+```
