@@ -7,3 +7,6 @@ venv
 app/script/test
 tmp
 .python
+
+docs/superpowers
+.claude/settings.local.json
