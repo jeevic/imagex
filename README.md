@@ -138,3 +138,39 @@ png、webp 默认背景透明,jpg 默认白底。
 ```bash
 curl -F "file=@input.jpg" -F "x-image-process=rounded-corners,r_20" http://127.0.0.1:8090/v1/image/process -o out.png
 ```
+
+### 图像缩放 resize
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| m | string | 是 | 缩放模式 fixed 强制缩放 / lfit 等比缩放限制在 w×h 内最大 / mfit 等比缩放延伸出 w×h 外最小 |
+| w | int | 是 | 缩放宽度 |
+| h | int | 是 | 缩放高度 |
+
+动图缩放取首帧变静图。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=resize,m_lfit,w_200,h_100" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
+
+### 图片旋转 rotate
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| a | int | 是 | 旋转度数 -360 ~ 360,旋转后图片可能比原图大 |
+
+动图不可旋转。
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=rotate,a_90" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
+
+### 自适应旋转 auto-orient
+
+| 参数 | 类型 | 是否必须 | 说明 |
+|--|--|--|--|
+| o | int | 是 | 0 按原图方向不自动旋转 / 1 自适应旋转 |
+
+```bash
+curl -F "file=@input.jpg" -F "x-image-process=auto-orient,o_1" http://127.0.0.1:8090/v1/image/process -o out.jpg
+```
