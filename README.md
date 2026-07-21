@@ -5,14 +5,16 @@ imagex 是一个通过 HTTP 提供的图片处理程序,处理过程指令化 pi
 
 ## 快速开始
 
-程序基于 Python 3.8 开发,依赖参考 Pillow 安装文档:https://pillow.readthedocs.io/en/stable/installation.html
+程序基于 Python 3.12 开发(在 `pyproject.toml` 声明 `requires-python = ">=3.10"`,用 `.python-version` 固定到 3.12),使用 [uv](https://docs.astral.sh/uv/) 管理依赖。先安装 uv:https://docs.astral.sh/uv/getting-started/installation/
 
 ```bash
-# 安装依赖
-pip install -r requirements.txt
+# 同步依赖(生成 .venv 与 uv.lock)
+uv sync
 
 # 启动(默认端口 8090)
 sh -x run.sh
+# 或本地调试(前台 Flask 开发服务器)
+uv run python main.py
 
 # 第一个请求: 缩放到 200x100 并转 PNG
 curl -F "file=@input.jpg" -F "x-image-process=resize,m_lfit,w_200,h_100/format,f_PNG" \
