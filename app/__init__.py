@@ -48,6 +48,8 @@ def init_config(app: Flask) -> None:
     flask 配置初始化
     """
     app.config.from_pyfile(f"{settings.APP_PATH}/setting/basic.py")
+    # Flask 3 不再读 JSON_AS_ASCII,等价于原 basic.py 的 JSON_AS_ASCII = False
+    app.json.ensure_ascii = False
 
 
 def register_blueprints(app: Flask) -> None:
