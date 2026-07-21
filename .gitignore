@@ -10,3 +10,5 @@ tmp
 
 
 .claude/settings.local.json
+.venv
+gunicorn.pid
