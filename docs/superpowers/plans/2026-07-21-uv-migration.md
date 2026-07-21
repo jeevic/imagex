@@ -34,7 +34,7 @@
 1. **`cloghandler` 别名在 `concurrent-log-handler==0.9.29` 中不存在。** `import cloghandler` 会抛 `ModuleNotFoundError`。spec 风险行「维护版 concurrent-log-handler 保留 cloghandler 别名」对实际解析版本不成立。因此 `app/libs/logger/__init__.py` 必须把两处 handler class 字符串从 `cloghandler.ConcurrentRotatingFileHandler` 改为 `concurrent_log_handler.ConcurrentRotatingFileHandler`。这是 **任务 3**,不是回退方案。(正确的模块 `concurrent_log_handler` 及其 `ConcurrentRotatingFileHandler` 类已确认存在。)
 2. **`info.py`、`process.py`、`handler.py` 中的 `import HeifImagePlugin` 也必须删除。** spec 的 (d) 节只写明删除 `import pillow_avif`,但这三个文件还都有 `import HeifImagePlugin`(对应 `heif-image-plugin` 包,在移除依赖清单中)。保留它会在启动时抛 `ModuleNotFoundError`。HEIF 注册在 **任务 4** 中通过 `register_heif_opener()` 集中化,因此两处 per-file import 在那里一并删除。
 
-规划期另确认(无需动作,仅作背景):`uv sync` 用 spec 的纯 `[project]` 骨架(无 `[build-system]`)即可成功 —— uv 将其视为虚拟项目,不会构建/安装 `imagex` 自身;Pillow 12.3.0 的 `features.check('avif')` 为 `True`;`pillow_heif.register_heif_opener` 存在;`flask_log_request_id`(`RequestID`、`parser`)在 Flask 3.1.3 下可正常导入;且 `from pydantic import BaseSettings` 在 pydantic 2.13 下抛 `PydanticImportError`(确认 configs 迁移是必须的,非可选)。
+规划期另确认(无需动作,仅作背景):`uv sync` 用 spec 的纯 `[project]` 骨架(无 `[build-system]`)即可成功 —— uv 将其视为虚拟项目,不会构建/安装 `imagex` 自身;Pillow 12.3.0 的 `features.check('avif')` 为 `True`;`pillow_heif.register_heif_opener` 存在;`flask_log_request_id`(`RequestID`、`parser`)在 Flask 3.1.3 下可正常导入(**但运行时不兼容**,见 §风险与回退:`flask_ctx_get_request_id` 懒加载 Flask 2.3 起移除的 `_app_ctx_stack`,每个带日志请求 500;已用 `app/__init__.py` 的 Flask 3 fetcher shim 修复,commit bcff2ce);且 `from pydantic import BaseSettings` 在 pydantic 2.13 下抛 `PydanticImportError`(确认 configs 迁移是必须的,非可选)。
 
 ---
 
@@ -806,7 +806,7 @@ git status --short
 - §(f) `run.sh` `uv run`:任务 6。
 - §(g) `.gitignore`:任务 1。
 - §验证(冒烟)步骤 1–6:任务 1 步骤 5(依赖)、任务 4 步骤 7(app 构造 = 步骤 2)、任务 9(步骤 3–6)。
-- §风险与回退:flask-log-request-id/Flask 3 规划期已确认兼容(无需回退);Pillow AVIF 已确认自带(任务 1 步骤 5);`cloghandler` 别名已确认不存在 -> 任务 3 即已应用的「回退」(现为必须);pydantic env 加载在任务 2 步骤 3 验证。
+- §风险与回退:flask-log-request-id/Flask 3 规划期**误判**兼容(仅做导入期检查) -- 实际运行时 `flask_ctx_get_request_id` 懒加载已移除的 `_app_ctx_stack` 致每个带日志请求 500(冒烟测试发现);**不回退 Flask**,改用 `app/__init__.py` 的 Flask 3 fetcher shim 修复(commit bcff2ce);Pillow AVIF 已确认自带(任务 1 步骤 5);`cloghandler` 别名已确认不存在 -> 任务 3 即已应用的「回退」(现为必须);pydantic env 加载在任务 2 步骤 3 验证。
 
 **2. 占位符扫描** —— 无 TBD/TODO/「添加适当错误处理」/「类似任务 N」。每个代码步骤含完整内容;每条命令含预期输出。
 

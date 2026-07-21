@@ -161,7 +161,7 @@ def get_configs():
 
 | 风险 | 回退 |
 |--|--|
-| flask-log-request-id 未验证与 Flask 3 兼容 | 若 `init_app` 报错,把 Flask pin 到 2.3(最后 2.x,仍支持 3.12 且保留旧 JSON 配置) |
+| flask-log-request-id 0.10.1 **运行时不兼容** Flask 3(`flask_ctx_get_request_id` 懒加载 Flask 2.3 起移除的 `_app_ctx_stack`,每个带日志请求 500;冒烟测试发现) | 不回退 Flask;在 `app/__init__.py` 用 Flask 3 fetcher shim 替换 `current_request_id.ctx_fetchers`(经 `g`/`current_app` 读取,commit bcff2ce)。仅在 fork/替换 flask-log-request-id 后方可移除 shim |
 | Pillow 11 内置 AVIF 在某些 wheel 不可用 | 若 AVIF 保存失败,加回 pillow-avif-plugin |
 | concurrent-log-handler 未保留 `cloghandler` 别名 | 把日志配置 `cloghandler.ConcurrentRotatingFileHandler` 改为 `concurrent_log_handler.ConcurrentRotatingFileHandler` |
 | pydantic-settings env 加载差异 | 校验 env_file 绝对路径与字段大小写(默认大小写不敏感,与 v1 一致) |
