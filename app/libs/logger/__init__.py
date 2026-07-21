@@ -40,7 +40,7 @@ LOGGING = {
         # 控制台输出Handler, 将日志信息输出到console , 调试的时候，把日志中的的Logger 改为这个，日志信息就直接输出到控制台了
         'info': {
             # Handler 类, 这种Handler 会定时分割日志
-            'class': 'cloghandler.ConcurrentRotatingFileHandler',
+            'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',
             # 日志分割大小
             'maxBytes': 1024 * 1024 * 1024,
             # 日志存储几份切割文件
@@ -59,7 +59,7 @@ LOGGING = {
 
         'error': {
             # Handler 类, 这种Handler 会定时分割日志
-            'class': 'cloghandler.ConcurrentRotatingFileHandler',
+            'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',
             # 日志分割大小
             'maxBytes': 1024 * 1024 * 1024,
             # 日志存储几份切割文件
