@@ -8,8 +8,6 @@ from app.libs.logger import logger
 from app.logic.process.exception.express_exception import ExpressParseException
 from app.logic.process.exception.handler_exception import HandlerException
 from PIL import Image
-import pillow_avif
-import HeifImagePlugin
 from app.logic.process.payload import Payload, ImageInfo
 from app.logic.process.handle import handler
 import time

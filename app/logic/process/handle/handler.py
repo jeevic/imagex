@@ -3,8 +3,6 @@ from app.logic.process.define import const
 from app.libs.logger import logger
 from app.logic.process.exception.handler_exception import HandlerException
 from PIL import Image, ExifTags
-import pillow_avif
-import HeifImagePlugin
 import time
 from typing import Tuple
 

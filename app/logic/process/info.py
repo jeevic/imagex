@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 from app.logic.process.handle import handler
 from PIL import Image
-import pillow_avif
-import HeifImagePlugin
 from app.libs.logger import logger
 import time
 

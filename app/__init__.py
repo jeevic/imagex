@@ -6,6 +6,7 @@ from flask_log_request_id import parser
 from app.controller.process import process_router
 from app.libs.logger import load_log
 from app.setting import settings
+from pillow_heif import register_heif_opener
 
 
 def init_app() -> Flask:
@@ -19,6 +20,10 @@ def init_app() -> Flask:
     init_logger()
 
     init_request_id(app)
+
+    # HEIC/HEIF 解码集中注册一次(替代各文件 import HeifImagePlugin)
+    register_heif_opener()
+
     register_blueprints(app)
 
     return app
