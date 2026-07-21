@@ -2,4 +2,4 @@
 
 export MODE=prod
 
-gunicorn -c gunicorn.conf.py main:app
+uv run gunicorn -c gunicorn.conf.py main:app

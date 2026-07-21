@@ -30,7 +30,7 @@ timeout = 100
 
 
 # 设置进程文件目录
-pidfile = '/var/run/gunicorn.pid'
+pidfile = 'gunicorn.pid'
 
 # 设置访问日志和错误信息日志路径
 accesslog = '-'
