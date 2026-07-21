@@ -12,3 +12,12 @@ dependencies = [
     "flask-log-request-id>=0.10.1",
     "concurrent-log-handler>=0.9.25",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
